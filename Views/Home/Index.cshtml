@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Municipal Services";
+}
+
+<div class="container my-5">
+    <!-- Hero heading -->
+    <h1 class="mb-4 page-hero">Municipal Services</h1>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Report Issues</h5>
+                    <p class="card-text">Log service problems with location, category and photos.</p>
+                    <a class="btn btn-primary" asp-controller="Issues" asp-action="Create">Start report</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm opacity-50">
+                <div class="card-body">
+                    <h5 class="card-title">Local Events & Announcements</h5>
+                    <p class="card-text">To be implemented later.</p>
+                    <button class="btn btn-secondary" disabled>Coming soon</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm opacity-50">
+                <div class="card-body">
+                    <h5 class="card-title">Service Request Status</h5>
+                    <p class="card-text">To be implemented later.</p>
+                    <button class="btn btn-secondary" disabled>Coming soon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+</div>

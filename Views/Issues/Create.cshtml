@@ -1,0 +1,66 @@
+﻿@model PROG7312_POE.ViewModels.IssueCreateVm
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Report an Issue";
+    var categories = Enum.GetValues(typeof(PROG7312_POE.Domain.IssueCategory))
+        .Cast<PROG7312_POE.Domain.IssueCategory>()
+        .Select(c => new SelectListItem(c.ToString(), c.ToString()));
+}
+<div class="container my-4">
+    <h2>Report an Issue</h2>
+    <p class="text-muted">Help us help you: describe the issue clearly and add a photo if possible.</p>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label"></label>
+            <select asp-for="Category" asp-items="categories" class="form-select"></select>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Attachments (images/documents)</label>
+            <input type="file" name="Files" multiple class="form-control" />
+            <div class="form-text">Allowed: jpg, png, pdf, doc, docx, txt. Max 10MB per file.</div>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" asp-for="WillingForFollowUp" />
+            <label class="form-check-label" asp-for="WillingForFollowUp">
+                I'm willing to be contacted for follow-up
+            </label>
+        </div>
+
+        <fieldset class="mb-3">
+            <legend class="fs-6">Quick survey</legend>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="SubmissionExperience" value="Easy" id="easyYes">
+                <label class="form-check-label" for="easyYes">Was this easy? Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="SubmissionExperience" value="Not easy" id="easyNo">
+                <label class="form-check-label" for="easyNo">No</label>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Review & confirm</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-link">Back to main menu</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
