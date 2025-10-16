@@ -1,0 +1,98 @@
+﻿@using PROG7312_POE.Domain
+@model IEnumerable<PROG7312_POE.Domain.MunicipalEvent>
+@{
+    ViewData["Title"] = "Local Events & Announcements";
+    var recommended = ViewBag.Recommended as IEnumerable<PROG7312_POE.Domain.MunicipalEvent>;
+    var q = (string?)ViewBag.Query ?? "";
+    var cat = (EventCategory?)ViewBag.Cat;
+    var fromVal = (string?)ViewBag.FromVal ?? "";
+    var toVal = (string?)ViewBag.ToVal ?? "";
+}
+
+<h1 class="mb-3">Local Events &amp; Announcements</h1>
+
+<form method="get" class="mb-3 row g-2 align-items-end">
+    <div class="col-md-5">
+        <label class="form-label">Search</label>
+        <input class="form-control" type="text" name="q"
+               placeholder="Search: location, category, title…" value="@q" />
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" name="cat">
+            <option value="">All</option>
+            @foreach (var opt in Html.GetEnumSelectList<EventCategory>())
+            {
+                var isSelected = cat.HasValue && opt.Value == ((int)cat.Value).ToString();
+                <option value="@opt.Value" selected="@(isSelected ? "selected" : null)">@opt.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <label class="form-label">From</label>
+        <input class="form-control" type="datetime-local" name="from" value="@fromVal" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">To</label>
+        <input class="form-control" type="datetime-local" name="to" value="@toVal" />
+    </div>
+
+    <!-- Buttons row -->
+    <div class="col-12 d-flex gap-2 mt-2">
+        <button class="btn btn-primary" type="submit">Search</button>
+        <a class="btn btn-secondary" href="@Url.Action("Index")">Clear</a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-success ms-auto" href="@Url.Action("Create")">+ Add</a>
+        }
+        else
+        {
+            <a class="btn btn-outline-secondary ms-auto"
+               href="@Url.Action("Login", "Account", new { returnUrl = Url.Action("Index", "Events") })">
+                Login as Admin to add
+            </a>
+        }
+    </div>
+</form>
+
+@if (TempData["ok"] != null)
+{
+    <div class="alert alert-success">@TempData["ok"]</div>
+}
+@if (TempData["err"] != null)
+{
+    <div class="alert alert-danger">@TempData["err"]</div>
+}
+
+@if (recommended != null && recommended.Any())
+{
+    <h5 class="mt-4">Recommended</h5>
+    <div class="row g-3">
+        @foreach (var e in recommended)
+        {
+            <div class="col-md-4">
+                <partial name="_EventCard" model="e" />
+            </div>
+        }
+    </div>
+}
+
+<h5 class="mt-4">Results (@(ViewBag.Total ?? 0))</h5>
+<div class="row g-3">
+    @foreach (var e in Model)
+    {
+        <div class="col-md-4">
+            <partial name="_EventCard" model="e" />
+        </div>
+    }
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <form method="post" asp-action="Undo" class="mt-4">
+        <button class="btn btn-outline-warning">Undo last add (Admin)</button>
+    </form>
+}

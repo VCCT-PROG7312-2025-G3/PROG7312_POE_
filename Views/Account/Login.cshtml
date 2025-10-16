@@ -1,0 +1,37 @@
+﻿@model PROG7312_POE.ViewModels.LoginVm
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="mb-3">Login</h1>
+<p class="text-muted">Choose a role to continue. Admins can add events; Residents can view only.</p>
+
+<form asp-action="Login" method="post" class="row g-3">
+    <input type="hidden" asp-for="ReturnUrl" />
+
+    <div class="col-md-6">
+        <label class="form-label">Username</label>
+        <input asp-for="Username" class="form-control" placeholder="e.g., admin123 or jane.doe" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Role</label>
+        <select asp-for="Role" class="form-select">
+            <option value="Resident">Resident</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,14 @@
+﻿@model PROG7312_POE.Domain.MunicipalEvent
+
+<div class="card h-100">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <div class="small text-muted">
+            @Model.Location • @Model.Category • Priority @Model.Priority
+        </div>
+        <div class="mt-2">@Model.Description</div>
+    </div>
+    <div class="card-footer">
+        <span class="small">@Model.Start.ToString("ddd, dd MMM yyyy HH:mm")</span>
+    </div>
+</div>

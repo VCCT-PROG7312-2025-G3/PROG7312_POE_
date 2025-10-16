@@ -7,6 +7,7 @@
     <h1 class="mb-4 page-hero">Municipal Services</h1>
 
     <div class="row g-3">
+        <!-- Report Issues -->
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
@@ -17,16 +18,18 @@
             </div>
         </div>
 
+        <!-- ✅ Local Events & Announcements -->
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm opacity-50">
+            <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Local Events & Announcements</h5>
-                    <p class="card-text">To be implemented later.</p>
-                    <button class="btn btn-secondary" disabled>Coming soon</button>
+                    <h5 class="card-title">Local Events &amp; Announcements</h5>
+                    <p class="card-text">See municipal events, outages, road closures and notices.</p>
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Events")">Open</a>
                 </div>
             </div>
         </div>
 
+        <!-- Service Request Status (coming later) -->
         <div class="col-md-4">
             <div class="card h-100 shadow-sm opacity-50">
                 <div class="card-body">

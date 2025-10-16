@@ -1,0 +1,39 @@
+﻿@model PROG7312_POE.Domain.MunicipalEvent
+@{
+    ViewData["Title"] = "Add Event / Announcement";
+}
+
+<h1>Add Event / Announcement</h1>
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" required />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Location</label>
+        <input asp-for="Location" class="form-control" required />
+    </div>
+    <div class="col-12">
+        <label class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Category</label>
+        <select asp-for="Category" class="form-select"
+                asp-items="Html.GetEnumSelectList<PROG7312_POE.Domain.EventCategory>()"></select>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Start</label>
+        <input asp-for="Start" class="form-control" type="datetime-local"
+               value="@Model.Start.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Priority (1–5)</label>
+        <input asp-for="Priority" class="form-control" type="number" min="1" max="5" value="3" />
+    </div>
+    <div class="col-12">
+        <button class="btn btn-success">Save</button>
+        <a class="btn btn-secondary" href="@Url.Action("Index")">Cancel</a>
+    </div>
+</form>
