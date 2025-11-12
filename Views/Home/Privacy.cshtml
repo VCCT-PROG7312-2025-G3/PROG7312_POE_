@@ -1,6 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container my-5">
+    <h1 class="mb-4 text-primary fw-bold">@ViewData["Title"]</h1>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <p class="text-muted">
+                This Privacy Policy describes how the Municipal Services Portal collects, uses, and protects your information while you interact with the system.
+            </p>
+
+            <h4 class="mt-4 text-primary">1. Information We Collect</h4>
+            <ul class="list-unstyled ps-3">
+                <li>📋 <strong>Service Reports:</strong> Details you provide when reporting municipal issues (location, description, photos, etc.).</li>
+                <li>🧭 <strong>Usage Data:</strong> Automatically collected analytics such as page visits and timestamps.</li>
+                <li>👤 <strong>Authentication Info:</strong> Only minimal user data (e.g., username, role) is stored securely for login purposes.</li>
+            </ul>
+
+            <h4 class="mt-4 text-primary">2. How We Use Information</h4>
+            <p>
+                The information collected helps the municipality to:
+            </p>
+            <ul class="list-unstyled ps-3">
+                <li>✅ Track and prioritize service requests efficiently.</li>
+                <li>✅ Improve response times for urgent issues.</li>
+                <li>✅ Analyze service trends and resource allocation.</li>
+            </ul>
+
+            <h4 class="mt-4 text-primary">3. Data Protection & Security</h4>
+            <p>
+                All data is securely stored using <strong>industry-standard encryption</strong>. Only authorized municipal employees can access your information. We do not sell or share personal data with third parties.
+            </p>
+
+            <h4 class="mt-4 text-primary">4. Your Rights</h4>
+            <p>
+                You may request access to, correction of, or deletion of your data at any time. Contact our support office or the municipal IT department for assistance.
+            </p>
+
+            <h4 class="mt-4 text-primary">5. Policy Updates</h4>
+            <p>
+                This Privacy Policy may be updated from time to time. The updated version will be posted on this page with a new “Last Updated” date.
+            </p>
+
+            <p class="mt-4 small text-muted">
+                📅 <em>Last updated: @DateTime.Now.ToString("MMMM dd, yyyy")</em>
+            </p>
+        </div>
+    </div>
+</div>

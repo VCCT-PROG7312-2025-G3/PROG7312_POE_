@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <!-- ✅ Local Events & Announcements -->
+        <!-- Local Events & Announcements -->
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
@@ -29,13 +29,18 @@
             </div>
         </div>
 
-        <!-- Service Request Status (coming later) -->
+        <!-- ✅ Service Request Status (Now clickable) -->
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm opacity-50">
+            <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Service Request Status</h5>
-                    <p class="card-text">To be implemented later.</p>
-                    <button class="btn btn-secondary" disabled>Coming soon</button>
+                    <p class="card-text">Track service requests using advanced data structures.</p>
+
+                    <a class="btn btn-primary"
+                       asp-controller="ServiceRequestStatus"
+                       asp-action="Index">
+                        Open
+                    </a>
                 </div>
             </div>
         </div>

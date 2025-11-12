@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http.Features;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Cookies;   // 👈 add
 using PROG7312_POE.Data;
-using PROG7312_POE.Services;
 using PROG7312_POE.Domain;
+using PROG7312_POE.Services;   // <-- contains RequestStatusService
+using PROG7312_POE_.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,10 @@ builder.Services.Configure<FormOptions>(o => o.MultipartBodyLengthLimit = 40 * 1
 // In-memory Event store
 builder.Services.AddSingleton<IEventStore, EventStore>();
 
-// 👇 SIMPLE COOKIE AUTH
+// 🔹 Service Request Status (AVL/Heap/Graph) – in-memory, seeded
+builder.Services.AddSingleton<RequestStatusService>();   // <--- ADDED
+
+// SIMPLE COOKIE AUTH
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -64,7 +68,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();   // 👈 must be before authorization
+app.UseAuthentication();   // must be before authorization
 app.UseAuthorization();
 
 app.MapControllerRoute(

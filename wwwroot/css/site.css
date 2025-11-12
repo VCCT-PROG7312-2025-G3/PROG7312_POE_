@@ -1,122 +1,281 @@
-/* ===== Design Tokens ===== */
-:root {
-    --brand: #2563eb; /* primary accent */
-    --brand-2: #22d3ee; /* cyan accent */
-    --bg: #0b1220; /* page background */
-    --surface: #0f172a; /* card/nav surface */
-    --text: #e5e7eb; /* primary text */
-    --muted: #94a3b8; /* secondary text */
-    --ring: rgba(37,99,235,.35);
-}
+/* =========================
+   Extra polish for Municipal Services UI
+   Add this *after* your existing site.css
+   ========================= */
 
-/* Optional: respect system light mode */
-@media (prefers-color-scheme: light) {
-    :root {
-        --bg: #f8fafc;
-        --surface: #ffffff;
-        --text: #0f172a;
-        --muted: #475569;
-        --ring: rgba(37,99,235,.15);
+/* ---------- Micro animations & utility ---------- */
+@keyframes floatUp {
+    from {
+        transform: translateY(6px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
-/* ===== Global ===== */
-html, body {
-    height: 100%;
-    background: radial-gradient(1200px 600px at 15% -10%, rgba(34,211,238,.15), transparent 60%), radial-gradient(800px 400px at 110% -10%, rgba(37,99,235,.18), transparent 60%), var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+.fade-in {
+    animation: floatUp .36s cubic-bezier(.2,.9,.2,1) both;
 }
 
-a {
-    color: var(--brand);
+.sr {
+    will-change: transform, opacity;
 }
 
-    a:hover {
-        color: #1d4ed8;
+/* clickable card (used for request cards) */
+.card-clickable {
+    cursor: pointer;
+    transition: transform .22s ease, box-shadow .22s ease;
+}
+
+    .card-clickable:hover {
+        transform: translateY(-6px) scale(1.005);
+        box-shadow: 0 18px 46px rgba(2,6,23,.5);
     }
 
-/* ===== Navbar / footer ===== */
-.navbar {
-    background: rgba(15,23,42,.6) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(148,163,184,.12);
+/* ---------- Table / requests list styling ---------- */
+table#requestsTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.00));
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.footer {
-    color: var(--muted);
-}
-
-/* ===== Hero & headings ===== */
-.container h1 {
-    font-weight: 700;
-    letter-spacing: .3px;
-}
-
-.page-hero {
-    position: relative;
-    padding: 2.25rem 0 1.25rem;
-}
-
-    .page-hero::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -10px;
-        width: 120px;
-        height: 4px;
-        background: linear-gradient(90deg, var(--brand), var(--brand-2));
-        border-radius: 999px;
-    }
-
-/* ===== Cards ===== */
-.card {
-    border: 1px solid rgba(148,163,184,.12);
-    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)), var(--surface);
-    color: var(--text);
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    box-shadow: 0 6px 18px rgba(2,6,23,.25);
-}
-
-    .card .card-title {
+    table#requestsTable thead th {
+        border-bottom: 1px solid rgba(148,163,184,.08);
         font-weight: 600;
+        color: var(--muted);
+        font-size: .95rem;
+        padding: .85rem 1rem;
+        background: linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.005));
     }
 
-    .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 14px 36px rgba(2,6,23,.45);
-        border-color: var(--ring);
+    table#requestsTable tbody td {
+        padding: .75rem 1rem;
+        font-size: .95rem;
+        vertical-align: middle;
+        border-bottom: 1px dashed rgba(148,163,184,.04);
+        color: var(--text);
     }
 
-.opacity-50 {
-    opacity: .6 !important;
+    table#requestsTable tbody tr:hover td {
+        background: linear-gradient(90deg, rgba(37,99,235,.03), rgba(34,211,238,.02));
+    }
+
+/* compact variant for small screens */
+@media (max-width: 768px) {
+    table#requestsTable thead th {
+        display: none;
+    }
+
+    table#requestsTable tbody td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: .6rem 1rem;
+    }
+
+    table#requestsTable tbody tr {
+        margin-bottom: .5rem;
+        display: block;
+        border-radius: 8px;
+        box-shadow: 0 6px 18px rgba(2,6,23,.06);
+        background: rgba(255,255,255,.01);
+    }
 }
 
-/* ===== Buttons ===== */
-.btn-primary {
-    background: linear-gradient(135deg, var(--brand), var(--brand-2));
-    border: none;
-    box-shadow: 0 6px 18px rgba(34, 211, 238, .25);
+/* ---------- Badges / status labels ---------- */
+.badge-status {
+    display: inline-block;
+    padding: .28rem .5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .78rem;
+    letter-spacing: .2px;
+    box-shadow: 0 6px 16px rgba(2,6,23,.08);
 }
 
-    .btn-primary:hover {
-        filter: brightness(.95);
+/* status colour system */
+.badge-open {
+    background: linear-gradient(90deg,#fde68a,#fca5a5);
+    color: #222;
+}
+/* open / warn */
+.badge-inprogress {
+    background: linear-gradient(90deg,#93c5fd,#60a5fa);
+    color: #042;
+}
+/* in progress */
+.badge-completed {
+    background: linear-gradient(90deg,#34d399,#10b981);
+    color: #042;
+}
+/* success */
+.badge-escalated {
+    background: linear-gradient(90deg,#fb7185,#ef4444);
+    color: #042;
+}
+/* urgent */
+
+/* priority pill */
+.pill-priority {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(148,163,184,.06);
+    padding: .25rem .5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: .9rem;
+}
+
+/* ---------- Inputs & form controls ---------- */
+.form-control {
+    background: rgba(255,255,255,.02);
+    border: 1px solid rgba(148,163,184,.08);
+    color: var(--text);
+    padding: .6rem .75rem;
+    transition: box-shadow .16s ease, border-color .16s ease, transform .12s ease;
+    border-radius: .5rem;
+}
+
+    .form-control::placeholder {
+        color: rgba(149,157,173,.5);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: rgba(37,99,235,.9);
+        box-shadow: 0 6px 20px rgba(37,99,235,.12);
         transform: translateY(-1px);
     }
 
-.btn:focus {
-    box-shadow: 0 0 0 .25rem var(--ring);
+/* input group button style */
+.input-group .btn {
+    border-radius: 0 .5rem .5rem 0;
+    border: none;
 }
 
-/* ===== Utilities / spacing ===== */
-.g-3 > [class*="col-"] {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
+/* smaller, subtle helper text */
+.small-muted {
+    font-size: .85rem;
+    color: var(--muted);
 }
 
-/* Subtle divider under the card grid */
-.section-divider {
-    border-top: 1px dashed rgba(148,163,184,.25);
-    margin-top: 1.75rem;
+/* ---------- Buttons ---------- */
+.btn {
+    transition: transform .12s ease, box-shadow .12s ease;
 }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(2,6,23,.12);
+    }
+
+/* subtle primary outline */
+.btn-outline-primary {
+    border: 1px solid rgba(37,99,235,.12);
+    color: var(--brand);
+    background: transparent;
+}
+
+    .btn-outline-primary:hover {
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: white;
+        box-shadow: 0 10px 36px rgba(37,99,235,.18);
+    }
+
+/* ---------- Card grid polish ---------- */
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 992px) {
+    .grid-cards {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* small meta row inside cards */
+.card-meta {
+    font-size: .87rem;
+    color: var(--muted);
+    margin-top: .75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ---------- Alerts & messages ---------- */
+.alert {
+    border-radius: .6rem;
+    padding: .75rem 1rem;
+    border: 1px solid rgba(148,163,184,.06);
+    background: linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.00));
+    color: var(--text);
+}
+
+/* success/notice styles */
+.alert-success {
+    border-left: 4px solid rgba(34,197,94,.9);
+    background: linear-gradient(180deg, rgba(34,197,94,.03), rgba(255,255,255,.00));
+    color: var(--text);
+}
+
+.alert-info {
+    border-left: 4px solid rgba(37,99,235,.9);
+    background: linear-gradient(180deg, rgba(37,99,235,.03), rgba(255,255,255,.00));
+    color: var(--text);
+}
+
+.alert-danger {
+    border-left: 4px solid rgba(239,68,68,.9);
+    background: linear-gradient(180deg, rgba(239,68,68,.03), rgba(255,255,255,.00));
+    color: var(--text);
+}
+
+/* ---------- Footer polish ---------- */
+.footer {
+    border-top: 1px solid rgba(148,163,184,.03);
+    padding: 2rem 0;
+    font-size: .9rem;
+}
+
+/* ---------- Tiny icon / chips ---------- */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .25rem .5rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid rgba(148,163,184,.05);
+    font-size: .88rem;
+}
+
+/* ---------- Focus ring utility (accessible) ---------- */
+.focus-ring:focus {
+    box-shadow: 0 0 0 .28rem rgba(37,99,235,.14);
+    outline: none;
+}
+
+/* ---------- Accessibility / reduce motion support ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .card, .btn, .card-clickable, .fade-in {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}
+
+/* ---------- Helpers you can use inline in markup ---------- */
+/* Use <span class="badge-status badge-open">Open</span> etc */
